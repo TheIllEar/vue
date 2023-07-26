@@ -1,26 +1,51 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container">
+    <AppAlert
+      v-if="alert"
+      :type="type"
+      title="Ойой"
+      text="Скрой меня =)"
+    />
+    <div class="card flex">
+      <p
+        class="card-text"
+        v-color:[colorType].hover="myColor"
+      >Меняем этот цвет</p>
+      <button
+        class="btn primary"
+        @click="toggleAlert(); changeColor();"
+      >{{alert ? 'Скрыть' : 'Показать'}} сообщение</button>
+    </div>
+
+    <AppBlock />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AppAlert from "./components/AppAlert";
+import AppBlock from "./components/AppBlock";
+import alertMixin from "./mixins/alertMixin";
+import colorDirective from "./directives/colorDirective";
 
 export default {
-  name: 'App',
+  data() {
+    return {
+      type: "primary",
+      myColor: "black",
+      colorType: "color",
+    };
+  },
+  mixins: [alertMixin],
+  directives: {color: colorDirective},
+  methods: {
+    changeColor() {
+      this.myColor = this.alert ? "#42b983" : 'black';
+    },
+  },
   components: {
-    HelloWorld
-  }
-}
+    AppAlert,
+    AppBlock,
+  },
+};
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

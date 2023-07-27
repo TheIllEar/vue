@@ -1,5 +1,14 @@
 <template>
   <div class="container">
+    <div class="card">
+      <h2>
+        {{$i18n('app.title')}}
+      </h2>
+      <button
+        class="btn"
+        @click="changeLanguage"
+      >{{$i18n('app.changeLang')}}</button>
+    </div>
     <AppAlert
       v-if="alert"
       :type="type"
@@ -10,14 +19,14 @@
       <p
         class="card-text"
         v-color:[colorType].hover="myColor"
-      >Меняем этот цвет</p>
+      >{{$i18n('app.changeColor')}}</p>
       <button
         class="btn primary"
         @click="toggleAlert(); changeColor();"
-      >{{alert ? 'Скрыть' : 'Показать'}} сообщение</button>
+      >{{alert ? $i18n('app.hide') : $i18n('app.show')}} {{$i18n('app.message')}}</button>
     </div>
 
-    <AppBlock />
+    <AppBlock :update='update' />
   </div>
 </template>
 
@@ -33,13 +42,22 @@ export default {
       type: "primary",
       myColor: "black",
       colorType: "color",
+      lang: "ru",
+      update: false,
     };
   },
   mixins: [alertMixin],
-  directives: {color: colorDirective},
+  directives: { color: colorDirective },
+  inject: ["changeLang"],
   methods: {
     changeColor() {
-      this.myColor = this.alert ? "#42b983" : 'black';
+      this.myColor = this.alert ? "#42b983" : "black";
+    },
+    changeLanguage() {
+      this.lang = this.lang === "ru" ? "en" : "ru";
+      this.changeLang(this.lang);
+      // this.$forceUpdate();
+      this.update = !this.update;
     },
   },
   components: {

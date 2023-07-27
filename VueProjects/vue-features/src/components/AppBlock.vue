@@ -10,7 +10,7 @@
       <button
         class="btn primary"
         @click="toggleAlert"
-      >{{alert ? 'Скрыть' : 'Показать'}} сообщение</button>
+      >{{alert ? $i18n('app.hide') : $i18n('app.show')}} {{$i18n('app.message')}}</button>
     </div>
   </div>
 </template>

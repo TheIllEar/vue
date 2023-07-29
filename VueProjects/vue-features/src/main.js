@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import './theme.css';
 import i18n from './plugins/i18n';
+import router from './routes/router';
 
 const app = createApp(App);
 const langs = {
@@ -26,5 +27,6 @@ const langs = {
         }
     },
 };
-app.use(i18n, langs);
+app.use(router)
+app.use(i18n, langs)
 app.mount('#app');

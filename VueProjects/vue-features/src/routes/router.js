@@ -1,15 +1,34 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Index from '../Pages/Index';
-import Login from '../Pages/Login';
 import Other from '../Pages/Other';
 
-export default createRouter({
+const Login = () => import('../Pages/Login');
+
+const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', component: Index },
-    { path: '/login', component: Login }, // alias: '/' чтобы компонент открывался на главной при загрузке
     {
-      path: '/Other',
+      path: '/',
+      component: Index,
+      meta: {
+        title: 'Home',
+      },
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login,
+      meta: {
+        title: 'Login',
+      },
+    }, // alias: '/' чтобы компонент открывался на главной при загрузке
+    {
+      path: '/other',
+      name: 'other',
+      meta: {
+        cantEnter: true,
+        title: 'Other',
+      },
       component: Other, // задаем внутри еще раз router-view для отображения детей
       // children: { // задаем разные дочерние страницы
       //   path: ':param?', // /: динамический параметр/название страницы
@@ -22,3 +41,18 @@ export default createRouter({
   linkActiveClass: 'active',
   linkExactActiveClass: 'active',
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.cantEnter) {
+    // next(false);
+    // next({ name: 'login' });
+    // @todo mini-registration with vuex or pinia
+    document.title = 'Login';
+    next('/login');
+  } else {
+    document.title = to.meta.title;
+    next();
+  }
+});
+
+export default router;

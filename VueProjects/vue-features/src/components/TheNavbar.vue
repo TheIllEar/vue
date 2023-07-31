@@ -16,7 +16,7 @@
         >
           <a
             href="#"
-            @click="navigate"
+            @click="navigateHandler(navigate, href)"
             class="danger"
             :class="{active: $route.path.indexOf(href) != -1}"
           >Остальное</a>
@@ -28,6 +28,17 @@
 
 <script>
 export default {
+  data() {
+    return {
+      myData: { oops: "gets removed" },
+    };
+  },
   props: {},
+  methods: {
+    navigateHandler(navigate, href) {
+      // navigate();
+      this.$router.push({ path: href });
+    },
+  },
 };
 </script>

@@ -1,5 +1,5 @@
-# vue-features
-
+# vue (Some projects by practice)
+![Alt text](image.png)
 ## Project setup
 ```
 npm install

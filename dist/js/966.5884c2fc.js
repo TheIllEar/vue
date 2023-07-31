@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkvue_features"]=self["webpackChunkvue_features"]||[]).push([[966],{8966:function(e,r,u){u.r(r),u.d(r,{default:function(){return o}});var n=u(3396);const s={class:"card"},t=(0,n._)("h2",null,"Страничка с .....",-1),a=[t];function c(e,r,u,t,c,f){return(0,n.wg)(),(0,n.iD)("div",s,a)}var f={props:{}},i=u(89);const l=(0,i.Z)(f,[["render",c]]);var o=l}}]);
-//# sourceMappingURL=966.5884c2fc.js.map

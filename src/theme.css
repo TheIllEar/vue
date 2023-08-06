@@ -90,10 +90,10 @@ h3 {
 
 .btn:disabled {
     cursor: not-allowed;
-    opacity: 1!important;
-    background: #eee!important;
-    border-color: #ddd!important;
-    color: #999!important;
+    opacity: 1 !important;
+    background: #eee !important;
+    border-color: #ddd !important;
+    color: #999 !important;
 }
 
 .btn:active {
@@ -136,6 +136,18 @@ h3 {
 
 .pt-5 {
     padding-top: 5rem;
+}
+
+.ml-10 {
+    margin-left: 10px;
+}
+
+.mr-0 {
+    margin-right: 0;
+}
+
+.mt-10 {
+    margin-top: 10px;
 }
 
 .form-control {
@@ -319,6 +331,7 @@ h3 {
     -ms-transform: translateZ(0);
     transform: translateZ(0);
 }
+
 .loader:before {
     width: 50%;
     height: 50%;
@@ -329,6 +342,7 @@ h3 {
     left: 0;
     content: '';
 }
+
 .loader:after {
     background: #2c3e50;
     width: 75%;
@@ -342,21 +356,25 @@ h3 {
     bottom: 0;
     right: 0;
 }
+
 @-webkit-keyframes load3 {
     0% {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+
     100% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
     }
 }
+
 @keyframes load3 {
     0% {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+
     100% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
@@ -384,7 +402,7 @@ h3 {
     display: flex;
 }
 
-.navbar-menu li {
+.navbar-menu li:not(:last-child) {
     margin-right: 2rem;
 }
 
@@ -397,6 +415,26 @@ h3 {
     color: #e53935;
 }
 
-.navbar-menu li a:hover, .navbar-menu li a.active {
+.navbar-menu li a:hover,
+.navbar-menu li a.active {
     border-bottom: 2px solid #3eaf7c;
+}
+
+.box-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.box-column {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+
+.messages {
+    flex-grow: 1;
+}
+.input-message {
+    height: 100px;
 }

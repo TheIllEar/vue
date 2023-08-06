@@ -22,6 +22,9 @@
           >Остальное</a>
         </router-link>
       </li>
+      <li>
+        <router-link to="/socket">Socket</router-link>
+      </li>
     </ul>
   </header>
 </template>

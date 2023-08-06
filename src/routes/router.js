@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Index from '../Pages/Index';
-import Other from '../Pages/Other';
+import Index from '../pages/Index';
+import Other from '../pages/Other';
+import Socket from '../pages/Socket';
 
-const Login = () => import('../Pages/Login');
+const Login = () => import('../pages/Login');
 
 const router = createRouter({
   history: createWebHistory(),
@@ -36,6 +37,7 @@ const router = createRouter({
       //   param: true // включаем props, который передаем из главного и ловим в дочерних компонентах
       // },
     },
+    { path: '/socket', component: Socket },
     { path: '/:notFound(.*)', redirect: '/' },
   ],
   linkActiveClass: 'active',

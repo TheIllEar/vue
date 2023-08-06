@@ -9,20 +9,15 @@
 </template>
 
 <script>
-import TheNavbar from "./components/TheNavbar";
+import TheNavbar from './components/TheNavbar';
 
 export default {
   data() {
-    return {
-  
-    };
+    return {};
   },
-  methods: {
-   
-  },
+  methods: {},
   components: {
-    TheNavbar
+    TheNavbar,
   },
 };
 </script>
-

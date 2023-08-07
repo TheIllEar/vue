@@ -67,8 +67,8 @@ class SocketioService {
   //   });
   // }
   disconnect() {
-    if (socket) {
-      socket.disconnect();
+    if (this.socket) {
+      this.socket.disconnect();
     }
   }
 }

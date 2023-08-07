@@ -23,7 +23,7 @@
         </router-link>
       </li>
       <li>
-        <router-link to="/socket">Socket</router-link>
+        <router-link to="/ws_messenger">Messenger</router-link>
       </li>
     </ul>
   </header>
@@ -33,7 +33,7 @@
 export default {
   data() {
     return {
-      myData: { oops: "gets removed" },
+      // myData: { oops: "gets removed" },
     };
   },
   props: {},

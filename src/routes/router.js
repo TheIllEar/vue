@@ -37,7 +37,13 @@ const router = createRouter({
       //   param: true // включаем props, который передаем из главного и ловим в дочерних компонентах
       // },
     },
-    { path: '/socket', component: Socket },
+    {
+      path: '/ws_messenger',
+      component: Socket,
+      meta: {
+        title: 'Socket Messenger',
+      },
+    },
     { path: '/:notFound(.*)', redirect: '/' },
   ],
   linkActiveClass: 'active',

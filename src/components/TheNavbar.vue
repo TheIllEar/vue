@@ -22,9 +22,8 @@
           >Остальное</a>
         </router-link>
       </li>
-      <li>
-        <router-link to="/ws_messenger">Messenger</router-link>
-      </li>
+      <li><router-link to="/vuex">Vuex</router-link></li>
+      <li><router-link to="/ws_messenger">Messenger</router-link></li>
     </ul>
   </header>
 </template>

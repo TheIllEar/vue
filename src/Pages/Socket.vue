@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="card">
-      <h2 @click="changeCount({type: 'increment'})">Работа с сокетами - обмен сообщениями {{ getCount }}</h2>
+      <h2>Работа с сокетами - обмен сообщениями</h2>
       <form
         class="box-row form-control"
         @submit.prevent="submitToken"
@@ -41,7 +41,6 @@
 
 <script>
 import socket from "../js/custom/socket.client";
-import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Socket",
@@ -50,9 +49,6 @@ export default {
       token: "",
       inputMessageText: "",
     };
-  },
-  computed: {
-    ...mapGetters("counter", ["getCount"]),
   },
   methods: {
     // Записать токен в стораж, показывать блок если нет токена и ссылку на его создание
@@ -67,7 +63,6 @@ export default {
         console.log("cb", cb);
       });
     },
-    ...mapActions("counter", ["changeCount"]),
   },
   beforeUnmount() {
     socket.disconnect();

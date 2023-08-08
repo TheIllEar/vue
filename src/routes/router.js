@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Index from '../pages/Index';
 import Other from '../pages/Other';
-import Socket from '../pages/Socket';
+import Vuex from '../pages/Vuex';
 
+const Socket = () => import('../pages/Socket');
 const Login = () => import('../pages/Login');
 
 const router = createRouter({
@@ -36,6 +37,13 @@ const router = createRouter({
       //   component: OtherComponent, // /: компонент страницы
       //   param: true // включаем props, который передаем из главного и ловим в дочерних компонентах
       // },
+    },
+    {
+      path: '/vuex',
+      component: Vuex,
+      meta: {
+        title: 'Vuex',
+      },
     },
     {
       path: '/ws_messenger',

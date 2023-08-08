@@ -17,14 +17,17 @@ export default {
     set(state, payload) {
       state.count = payload.value;
     },
+    reset(state) {
+      state.count = 0;
+    },
   },
   actions: {
     changeCount({ commit }, payload) {
-      commit(payload.type, payload.value);
+      commit(payload.type, payload);
     },
   },
   getters: {
-    getCount(state, getters, ruutState, rootGetters) {
+    getCount(state, getters, rootState, rootGetters) {
       return state.count;
     },
   },

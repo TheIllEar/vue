@@ -1,23 +1,27 @@
-<!-- Все еще раз поппрактиковать -->
+<!-- 
+- переделать компонент навигации и страницу vuex на композишн (добавить отдельный компонент)
+ -->
+
 <template>
-  <div class="container">
-    <div class="container with-nav">
-      <the-navbar></the-navbar>
-    </div>
-    <router-view></router-view>
-  </div>
+  <component :is="layout + '-layout'"></component>
 </template>
 
 <script>
-import TheNavbar from './components/TheNavbar';
+import { computed } from "vue";
+import { useRoute } from "vue-router";
+import AuthLayout from "./layout/AuthLayout";
+import MainLayout from "./layout/MainLayout";
 
 export default {
-  data() {
-    return {};
+  setup() {
+    const router = useRoute();
+    return {
+      layout: computed(() => router.meta.layout),
+    };
   },
-  methods: {},
   components: {
-    TheNavbar,
+    AuthLayout,
+    MainLayout,
   },
 };
 </script>

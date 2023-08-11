@@ -1,4 +1,5 @@
 // @todo check on ENV for VUE_APP_SOCKET_ENDPOINT || 'http://localhost:3000'
+// проверить отправку в network
 import { io } from 'socket.io-client';
 
 // let socket = false;

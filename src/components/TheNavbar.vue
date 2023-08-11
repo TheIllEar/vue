@@ -1,4 +1,7 @@
 <template>
+<!-- 
+- переделать компонент навигации и страницу vuex на композишн (добавить отдельный компонент)
+ -->
   <header class="navbar">
     <h3>Vue Features</h3>
     <ul class="navbar-menu">

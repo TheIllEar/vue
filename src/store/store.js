@@ -9,6 +9,6 @@ export default createStore({
     counter: counter,
   },
   mutations: {},
-  gactions: {},
+  actions: {},
   getters: {},
 });

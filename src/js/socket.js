@@ -27,7 +27,7 @@ io.use(async (socket, next) => {
   console.log('check token');
   try {
     const user = await jwt.verify(token, JWT_SECRET); // verify jwt token and get user data
-    console.log('user', user);
+    console.log('user: ', user.name);
     socket.user = user; // save the user data into socket object, to be used further
     next();
   } catch (e) {
@@ -38,23 +38,11 @@ io.use(async (socket, next) => {
 
 // Установка соединения
 io.on('connection', (socket) => {
-  // join user's own room
-  // socket.join(socket.user.id);
   socket.join('myRandomChatRoomId');
-  console.log('a user connected');
-
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
-
-  // @todo проверить работу!!!! найьти ивент
-  socket.on('join', (roomName) => {
-    console.log('join: ' + roomName);
-    socket.join(roomName);
-  });
+  console.log('User connected');
 
   socket.on('message', ({ message, roomName }, callback) => {
-    console.log('message: ' + message + ' in ' + roomName);
+    console.log('Sent message: ' + message + ' in ' + roomName);
 
     // generate data to send to receivers
     const outgoingMessage = {
@@ -62,12 +50,15 @@ io.on('connection', (socket) => {
       id: socket.user.id,
       message,
     };
+
     // send socket to all in room except sender
     socket.in(roomName).emit('broadcast', outgoingMessage);
     callback({
       status: 'ok',
     });
-    // send to all including sender
-    // io.to(roomName).emit("message", message);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected');
   });
 });

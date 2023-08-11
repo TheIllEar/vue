@@ -3,9 +3,6 @@ import Index from '../pages/Index';
 import Other from '../pages/Other';
 import Vuex from '../pages/Vuex';
 
-const Socket = () => import('../pages/Socket');
-const Login = () => import('../pages/Login');
-
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -14,14 +11,16 @@ const router = createRouter({
       component: Index,
       meta: {
         title: 'Home',
+        layout: 'main'
       },
     },
     {
       path: '/login',
       name: 'login',
-      component: Login,
+      component: () => import('../pages/Login'),
       meta: {
         title: 'Login',
+        layout: 'auth'
       },
     }, // alias: '/' чтобы компонент открывался на главной при загрузке
     {
@@ -30,6 +29,7 @@ const router = createRouter({
       meta: {
         cantEnter: true,
         title: 'Other',
+        layout: 'main'
       },
       component: Other, // задаем внутри еще раз router-view для отображения детей
       // children: { // задаем разные дочерние страницы
@@ -43,13 +43,15 @@ const router = createRouter({
       component: Vuex,
       meta: {
         title: 'Vuex',
+        layout: 'main'
       },
     },
     {
       path: '/ws_messenger',
-      component: Socket,
+      component: () => import('../pages/Socket'),
       meta: {
         title: 'Socket Messenger',
+        layout: 'main'
       },
     },
     { path: '/:notFound(.*)', redirect: '/' },

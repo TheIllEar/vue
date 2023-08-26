@@ -5,6 +5,7 @@
   >
     <p class="alert-title">{{title}}</p>
     <p>{{text}}</p>
+    <span class="alert-close">&times;</span>
   </div>
 </template>
 <script>

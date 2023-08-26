@@ -1,5 +1,6 @@
 <template>
   <form
+    novalidate
     class="card"
     @submit.prevent="onSubmit"
   >
@@ -17,6 +18,7 @@
       <label for="password">Пароль</label>
       <input
         type="password"
+        autocomplete="on"
         id="password"
         v-model="password"
       >
@@ -26,36 +28,17 @@
       class="btn primary"
       type="submit"
     >Войти</button>
+    <button
+      class="btn"
+      @click.prevent
+    >Зарегистрироваться</button>
   </form>
 </template>
 <script>
-import * as yup from "yup";
-import { useField, useForm } from "vee-validate";
+import { useLoginForm } from "../js/composables/useLoginForm";
 export default {
-  setup(props) {
-    const { handleSubmit, isSubmitting } = useForm();
-    const {
-      value: email,
-      errorMessage: eError,
-      handleBlur: eBlur,
-    } = useField("email", yup.string().trim().required().email());
-    const {
-      value: password,
-      errorMessage: pError,
-      handleBlur: pBlur,
-    } = useField("password", yup.string().trim().required().min(6));
-    const onSubmit = handleSubmit((values) => {
-      console.log("values", values);
-    });
-    return {
-      email,
-      password,
-      eError,
-      pError,
-      eBlur,
-      pBlur,
-      onSubmit,
-    };
+  setup() {
+    return { ...useLoginForm() };
   },
 };
 </script>

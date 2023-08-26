@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <div class="card form-control">
-      <h2>Работа с Store - Vuex {{getCount}}</h2>
+      <!-- $store.count -->
+      <h2>Работа с Store - Vuex {{getCount}}</h2> 
       <div class="box">
         <input
           class="input"

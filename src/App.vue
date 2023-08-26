@@ -1,5 +1,10 @@
 <!-- 
 - переделать компонент навигации и страницу vuex на композишн (добавить отдельный компонент)
+- регистрация через firebase(добавить поле имени и cохранять данные) + генерить токен через JWT
+- авторизация через firebase
+- обработка ошибок алертом
+- ввод комнаты(может еще ввод ключевого слова для JWT)
+- сделать змену цвета BG на pinia
  -->
 
 <template>
@@ -14,9 +19,9 @@ import MainLayout from "./layout/MainLayout";
 
 export default {
   setup() {
-    const router = useRoute();
+    const route = useRoute();
     return {
-      layout: computed(() => router.meta.layout),
+      layout: computed(() => route.meta.layout),
     };
   },
   components: {

@@ -28,6 +28,7 @@ const langs = {
     },
   },
 };
+console.log('Environment is:', process.env.NODE_ENV);
 app.use(store);
 app.use(router);
 app.use(i18n, langs);

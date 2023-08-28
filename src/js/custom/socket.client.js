@@ -44,7 +44,8 @@ class SocketioService {
   constructor() {}
 
   setupSocketConnection(token) {
-    this.socket = io(process.env.VUE_APP_SOCKET_ENDPOINT, {
+    const socketServerEndpoint = process.env.NODE_ENV === 'development' ? process.env.VUE_APP_SOCKET_ENDPOINT : 'https://vue-server.onrender.com/';
+    this.socket = io(socketServerEndpoint, {
       auth: {
         token,
       },

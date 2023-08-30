@@ -4,22 +4,33 @@
       <h2>Работа с сокетами - обмен сообщениями</h2>
       <form
         class="box-row form-control"
-        @submit.prevent="submitToken"
+        @submit.prevent="submitRoom"
       >
         <input
           class="input"
           type="text"
-          placeholder="Enter token"
-          v-model="token"
+          placeholder="Enter room"
+          v-model="currentRoom"
         />
         <button
           class="btn ml-10 mr-0"
           type="submit"
-        >Submit</button>
+        >Connection</button>
       </form>
     </div>
-    <div class="card">
-      <div class="messages"></div>
+    <div
+      v-if="room"
+      class="card"
+    >
+      <div class="messages">
+        <div
+          v-for="user in messages"
+          :key="user.id"
+          :class="{'user-message': user.isUser}"
+        >
+          {{user.name}}: {{user.message}}
+        </div>
+      </div>
       <form
         class="box-column form-control"
         @submit.prevent="submitMessage"
@@ -40,32 +51,12 @@
 </template>
 
 <script>
-import socket from "../js/custom/socket.client";
+import { useSocket } from "../js/composables/useSocket";
 
 export default {
-  name: "Socket",
-  data() {
-    return {
-      token: "",
-      inputMessageText: "",
-    };
-  },
-  methods: {
-    // Записать токен в стораж, показывать блок если нет токена и ссылку на его создание
-    // https://jwt.io/
-    submitToken() {
-      socket.setupSocketConnection(this.token);
-    },
-    submitMessage() {
-      const CHAT_ROOM = "myRandomChatRoomId";
-      const message = this.inputMessageText;
-      socket.sendMessage({ message, roomName: CHAT_ROOM }, (cb) => {
-        console.log("cb", cb);
-      });
-    },
-  },
-  beforeUnmount() {
-    socket.disconnect();
+  setup() {
+    // const store = useStore();
+    return { ...useSocket() };
   },
 };
 </script>

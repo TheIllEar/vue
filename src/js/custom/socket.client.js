@@ -1,53 +1,15 @@
-// @todo check on ENV for VUE_APP_SOCKET_ENDPOINT || 'http://localhost:3000'
-// проверить отправку в network
 import { io } from 'socket.io-client';
-
-// let socket = false;
-// export default {
-//   setupSocketConnection(token) {
-//     // socket = io(process.env.VUE_APP_SOCKET_ENDPOINT);
-
-//     // socket.emit('my message', 'Hello there from Vue.');
-
-//     // socket.on('my broadcast', (data) => {
-//     //   console.log(data);
-//     // });
-//     this.socket = io(process.env.VUE_APP_SOCKET_ENDPOINT, {
-//       auth: {
-//         token,
-//       },
-//     });
-
-//     console.log(`Connecting socket...`);
-//   },
-//   sendMessage({ message, roomName }, cb) {
-//     if (this.socket) {
-//       this.socket.emit('message', { message, roomName }, cb);
-//     }
-//   },
-//   // subscribeToMessages(cb) {
-//   //   if (!this.socket) return true;
-//   //   this.socket.on('message', (msg) => {
-//   //     console.log('Room event received!');
-//   //     return cb(null, msg);
-//   //   });
-//   // },
-//   disconnect() {
-//     if (socket) {
-//       socket.disconnect();
-//     }
-//   },
-// };
 
 class SocketioService {
   socket;
   constructor() {}
 
-  setupSocketConnection(token) {
+  setupSocketConnection(token, room) {
     const socketServerEndpoint = process.env.NODE_ENV === 'development' ? process.env.VUE_APP_SOCKET_ENDPOINT : 'https://vue-server.onrender.com/';
     this.socket = io(socketServerEndpoint, {
       auth: {
         token,
+        room,
       },
     });
 
@@ -56,18 +18,21 @@ class SocketioService {
     });
     console.log(`Connecting socket...`);
   }
+
+  subscribeToMessages(cb) {
+    if (!this.socket) return true;
+    this.socket.on('broadcast', (msg) => {
+      console.log('Room event received!');
+      return cb(null, msg);
+    });
+  }
+
   sendMessage({ message, roomName }, cb) {
     if (this.socket) {
       this.socket.emit('message', { message, roomName }, cb);
     }
   }
-  // subscribeToMessages(cb) {
-  //   if (!this.socket) return true;
-  //   this.socket.on('message', (msg) => {
-  //     console.log('Room event received!');
-  //     return cb(null, msg);
-  //   });
-  // }
+ 
   disconnect() {
     if (this.socket) {
       this.socket.disconnect();

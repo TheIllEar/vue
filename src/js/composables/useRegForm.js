@@ -3,10 +3,13 @@ import { useField, useForm } from 'vee-validate';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 
-export const useLoginForm = () => {
+export const useRegForm = () => {
   const { handleSubmit, isSubmitting } = useForm();
   const store = useStore();
   const router = useRouter();
+
+  // Username
+  const { value: username, errorMessage: uError, handleBlur: uBlur } = useField('name', yup.string().trim().required('Пожалуйста введите имя'));
 
   // Email
   const {
@@ -26,6 +29,19 @@ export const useLoginForm = () => {
   // Password
   const { value: password, errorMessage: pError, handleBlur: pBlur } = useField('password', yup.string().trim().required('Пожалуйста введите пароль').min(6, 'Длина пароля должна быть минимум 6 символов'));
 
+  // Password Repeat
+  const {
+    value: passwordRepeat,
+    errorMessage: pdError,
+    handleBlur: pdBlur,
+  } = useField('field', (value) => {
+    if (value === password.value) {
+      return true;
+    } else {
+      return 'Пароли должны совпадать';
+    }
+  });
+
   const clickSubmitHandler = (e) => {
     store.commit('auth/changeForm');
   };
@@ -33,7 +49,7 @@ export const useLoginForm = () => {
   const onSubmit = handleSubmit(async (values) => {
     try {
       store.commit('setLoading');
-      await store.dispatch('auth/login', values);
+      await store.dispatch('auth/registration', values);
       router.push('/');
     } catch (e) {
     } finally {
@@ -41,12 +57,18 @@ export const useLoginForm = () => {
     }
   });
   return {
+    username,
     email,
     password,
+    passwordRepeat,
+    uError,
     eError,
     pError,
+    pdError,
+    uBlur,
     eBlur,
     pBlur,
+    pdBlur,
     onSubmit,
     clickSubmitHandler,
     isSubmitting,

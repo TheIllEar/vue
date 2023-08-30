@@ -2,8 +2,12 @@ import axios from 'axios';
 import { error } from '../../js/custom/errors';
 
 const TOKEN_KEY = 'jwt_token',
+  SOCKET_ENDPOINT = process.env.NODE_ENV === 'development' ? process.env.VUE_APP_SOCKET_ENDPOINT : 'https://vue-server.onrender.com/',
   DEFAULT_STATE = {
     token: localStorage.getItem(TOKEN_KEY),
+    user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
+    room: '',
+    loginForm: true,
   };
 
 export default {
@@ -12,24 +16,39 @@ export default {
     return { ...DEFAULT_STATE };
   },
   mutations: {
+    changeForm(state) {
+      state.loginForm = !state.loginForm;
+    },
     setToken(state, token) {
       state.token = token;
       localStorage.setItem(TOKEN_KEY, token);
     },
+    setUser(state, user) {
+      state.user = localStorage.setItem(
+        'user',
+        JSON.stringify({
+          id: user._id,
+          name: user.username,
+        })
+      );
+    },
+    setRoom(state, room) {
+      state.room = room;
+    },
     logout(state, payload) {
       state.token = null;
+      state.user = {};
       localStorage.removeItem(TOKEN_KEY);
     },
   },
   actions: {
     async login({ commit, dispatch }, payload) {
       try {
-        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.VUE_APP_FB_KEY}`;
-        const { data } = await axios.post(url, { ...payload, returnSecureToken: true });
-        commit('setToken', data.idToken);
+        const { data } = await axios.post(`${SOCKET_ENDPOINT}/auth/login`, payload);
+        commit('setToken', data.token);
+        commit('setUser', data.user);
         commit('clearMessage', null, { root: true });
       } catch (e) {
-        // не зареган => предложить зарегаться через jwt_token
         dispatch(
           'setMessage',
           {
@@ -38,17 +57,49 @@ export default {
           },
           { root: true }
         );
-        // console.error('error', error(e.response.data.error.message));
         throw new Error();
       }
     },
+    async registration({ commit, dispatch }, payload) {
+      try {
+        const { data } = await axios.post(`${SOCKET_ENDPOINT}/auth/registration`, {
+          username: payload.name,
+          email: payload.email,
+          password: payload.password,
+        });
+        commit('setToken', data.token);
+        commit('setUser', data.user);
+        commit('clearMessage', null, { root: true });
+      } catch (e) {
+        dispatch(
+          'setMessage',
+          {
+            value: error(e.response.data.error.message),
+            type: 'danger',
+          },
+          { root: true }
+        );
+        throw new Error();
+      }
+    },
+    // @todo получать и записывать по id или почте
+    // async getUser({ commit, dispatch }, payload) {},
   },
   getters: {
     token(state) {
       return state.token;
     },
+    room(state) {
+      return state.room;
+    },
+    user(state) {
+      return state.user;
+    },
     isAuth(_, getters) {
       return !!getters.token;
+    },
+    isLogin(state) {
+      return state.loginForm;
     },
   },
 };

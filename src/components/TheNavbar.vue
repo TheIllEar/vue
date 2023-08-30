@@ -1,5 +1,5 @@
 <template>
-<!-- 
+  <!-- 
 - переделать компонент навигации и страницу vuex на композишн (добавить отдельный компонент)
  -->
   <header class="navbar">
@@ -10,7 +10,6 @@
           <span @click="$router.push('/')">Главная</span>
         </router-link>
       </li>
-      <li><router-link to="/login">Login</router-link></li>
       <li>
         <router-link
           to="/other"
@@ -27,11 +26,17 @@
       </li>
       <li><router-link to="/vuex">Vuex</router-link></li>
       <li><router-link to="/ws_messenger">Messenger</router-link></li>
+      <li><a
+          href="#"
+          @click.prevent="logoutHandler"
+        >Logout</a></li>
     </ul>
   </header>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 export default {
   data() {
     return {
@@ -40,9 +45,14 @@ export default {
   },
   props: {},
   methods: {
+    ...mapMutations('auth',['logout']),
     navigateHandler(navigate, href) {
       // navigate();
       this.$router.push({ path: href });
+    },
+    logoutHandler() {
+      this.logout();
+      this.$router.push({path: "/login"});
     },
   },
 };

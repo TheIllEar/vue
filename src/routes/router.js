@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Index from '../pages/Index';
 import Other from '../pages/Other';
 import Vuex from '../pages/Vuex';
+import store from '../store/store';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -11,7 +12,8 @@ const router = createRouter({
       component: Index,
       meta: {
         title: 'Home',
-        layout: 'main'
+        layout: 'main',
+        auth: true,
       },
     },
     {
@@ -20,16 +22,17 @@ const router = createRouter({
       component: () => import('../pages/Login'),
       meta: {
         title: 'Login',
-        layout: 'auth'
+        layout: 'auth',
+        auth: false,
       },
     }, // alias: '/' чтобы компонент открывался на главной при загрузке
     {
       path: '/other',
       name: 'other',
       meta: {
-        cantEnter: true,
         title: 'Other',
-        layout: 'main'
+        layout: 'main',
+        auth: true,
       },
       component: Other, // задаем внутри еще раз router-view для отображения детей
       // children: { // задаем разные дочерние страницы
@@ -43,7 +46,8 @@ const router = createRouter({
       component: Vuex,
       meta: {
         title: 'Vuex',
-        layout: 'main'
+        layout: 'main',
+        auth: true,
       },
     },
     {
@@ -51,7 +55,8 @@ const router = createRouter({
       component: () => import('../pages/Socket'),
       meta: {
         title: 'Socket Messenger',
-        layout: 'main'
+        layout: 'main',
+        auth: true,
       },
     },
     { path: '/:notFound(.*)', redirect: '/' },
@@ -61,14 +66,17 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.cantEnter) {
+  const requireAuth = to.meta.auth;
+
+  if (requireAuth && store.getters['auth/isAuth']) {
     // next(false);
     // next({ name: 'login' });
-    // @todo mini-registration with vuex or pinia
-    document.title = 'Login';
-    next('/login');
+    next();
+  } else if (requireAuth && !store.getters['auth/isAuth']) {
+    next('/login?message=auth');
+  } else if (!requireAuth && store.getters['auth/isAuth']) {
+    next('/');
   } else {
-    document.title = to.meta.title;
     next();
   }
 });

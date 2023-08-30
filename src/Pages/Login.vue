@@ -1,44 +1,29 @@
 <template>
-  <form
-    novalidate
-    class="card"
-    @submit.prevent="onSubmit"
-  >
-    <h1>Войти в систему</h1>
-    <div :class="['form-control',{invalid: eError}]">
-      <label for="email">Email</label>
-      <input
-        type="email"
-        id="email"
-        v-model="email"
-      >
-      <small v-if="eError">{{eError}}</small>
-    </div>
-    <div :class="['form-control',{invalid: pError}]">
-      <label for="password">Пароль</label>
-      <input
-        type="password"
-        autocomplete="on"
-        id="password"
-        v-model="password"
-      >
-      <small v-if="pError">{{pError}}</small>
-    </div>
-    <button
-      class="btn primary"
-      type="submit"
-    >Войти</button>
-    <button
-      class="btn"
-      @click.prevent
-    >Зарегистрироваться</button>
-  </form>
+  <div>
+    <AppLoader v-if="loading" />
+    <AppLoginFormVue v-if="loginForm" />
+    <AppRegistrationFormVue v-else />
+  </div>
 </template>
 <script>
-import { useLoginForm } from "../js/composables/useLoginForm";
+import AppLoader from "../components/AppLoader.vue";
+import AppLoginFormVue from "../components/AppLoginForm.vue";
+import AppRegistrationFormVue from "../components/AppRegistrationForm.vue";
+import { useStore } from "vuex";
+import { computed } from "vue";
+
 export default {
   setup() {
-    return { ...useLoginForm() };
+    const store = useStore();
+    return {
+      loginForm: computed(() => store.getters["auth/isLogin"]),
+      loading: computed(() => store.getters["isLoading"]),
+    };
+  },
+  components: {
+    AppLoader,
+    AppLoginFormVue,
+    AppRegistrationFormVue,
   },
 };
 </script>

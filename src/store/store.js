@@ -4,6 +4,7 @@ import auth from './modules/auth';
 
 const DEFAULT_STATE = {
   message: null,
+  loading: false,
 };
 
 export default createStore({
@@ -15,8 +16,13 @@ export default createStore({
     auth,
   },
   mutations: {
+    setLoading(state) {
+      state.loading = true;
+    },
+    clearLoading(state) {
+      state.loading = false;
+    },
     setMessage(state, message) {
-      console.log('setMessage', message);
       state.message = message;
     },
     clearMessage(state) {
@@ -28,8 +34,12 @@ export default createStore({
       commit('setMessage', message);
       setTimeout(() => {
         commit('clearMessage');
-      }, 5000);
+      }, 8000);
     },
   },
-  getters: {},
+  getters: {
+    isLoading(state) {
+      return state.loading;
+    },
+  },
 });

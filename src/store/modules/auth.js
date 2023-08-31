@@ -2,7 +2,7 @@ import axios from 'axios';
 import { error } from '../../js/custom/errors';
 
 const TOKEN_KEY = 'jwt_token',
-  SOCKET_ENDPOINT = process.env.NODE_ENV === 'development' ? process.env.VUE_APP_SOCKET_ENDPOINT : 'https://vue-server.onrender.com/',
+  SOCKET_ENDPOINT = process.env.NODE_ENV === 'development' ? process.env.VUE_APP_SOCKET_ENDPOINT : 'https://vue-server.onrender.com',
   DEFAULT_STATE = {
     token: localStorage.getItem(TOKEN_KEY),
     user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},

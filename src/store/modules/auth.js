@@ -24,20 +24,24 @@ export default {
       localStorage.setItem(TOKEN_KEY, token);
     },
     setUser(state, user) {
-      state.user = localStorage.setItem(
-        'user',
-        JSON.stringify({
-          id: user._id,
-          name: user.username,
-        })
-      );
+      const data = {
+        id: user._id,
+        name: user.username,
+      };
+      state.user = data;
+      localStorage.setItem('user', JSON.stringify(data));
     },
     setRoom(state, room) {
       state.room = room;
     },
+    clearRoom(state) {
+      state.room = '';
+    },
     logout(state, payload) {
       state.token = null;
+      state.room = '';
       state.user = {};
+      localStorage.removeItem('user');
       localStorage.removeItem(TOKEN_KEY);
     },
   },
@@ -82,8 +86,6 @@ export default {
         throw new Error();
       }
     },
-    // @todo получать и записывать по id или почте
-    // async getUser({ commit, dispatch }, payload) {},
   },
   getters: {
     token(state) {

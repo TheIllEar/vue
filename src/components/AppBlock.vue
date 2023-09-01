@@ -5,6 +5,7 @@
       type="danger"
       title="Упс!!!"
       text="А тут ошибочка =("
+      @hide="toggleAlert"
     />
     <div class="card">
       <button

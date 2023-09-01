@@ -5,6 +5,7 @@
       :type="message.type"
       title="Ойой"
       :text='message.value'
+      @hide="toggleAlert"
     />
     <RouterView />
   </div>
@@ -17,7 +18,11 @@ import AppAlert from "../components/AppAlert";
 export default {
   setup() {
     const store = useStore();
+    const toggleAlert = () => {
+      store.commit("clearMessage");
+    };
     return {
+      toggleAlert,
       message: computed(() => store.state.message),
     };
   },

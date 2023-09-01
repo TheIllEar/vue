@@ -1,5 +1,5 @@
 import { useStore } from 'vuex';
-import { ref, reactive, computed, onMounted, onBeforeMount } from 'vue';
+import { ref, reactive, computed, onUnmounted, onBeforeMount } from 'vue';
 import socket from '../custom/socket.client';
 
 export const useSocket = () => {
@@ -35,6 +35,10 @@ export const useSocket = () => {
 
   onBeforeMount(() => {
     socket.disconnect();
+  });
+
+  onUnmounted(() => {
+    store.commit('auth/clearRoom');
   });
 
   return {

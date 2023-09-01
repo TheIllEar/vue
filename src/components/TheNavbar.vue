@@ -1,13 +1,10 @@
 <template>
-  <!-- 
-- переделать компонент навигации и страницу vuex на композишн (добавить отдельный компонент)
- -->
   <header class="navbar">
-    <h3>Vue Features</h3>
+    <h3>VF</h3>
     <ul class="navbar-menu">
       <li>
         <router-link to="/">
-          <span @click="$router.push('/')">Главная</span>
+          <span @click="$router.push('/')">Main</span>
         </router-link>
       </li>
       <li>
@@ -19,17 +16,19 @@
           <a
             href="#"
             @click="navigateHandler(navigate, href)"
-            class="danger"
             :class="{active: $route.path.indexOf(href) != -1}"
-          >Остальное</a>
+          >Langs</a>
         </router-link>
       </li>
-      <li><router-link to="/vuex">Vuex</router-link></li>
+      <li><router-link to="/vuex">Counter</router-link></li>
       <li><router-link to="/ws_messenger">Messenger</router-link></li>
-      <li><a
+      <li>
+        <a
           href="#"
           @click.prevent="logoutHandler"
-        >Logout</a></li>
+          class="danger"
+        >Logout</a>
+      </li>
     </ul>
   </header>
 </template>
@@ -38,21 +37,15 @@
 import { mapMutations } from "vuex";
 
 export default {
-  data() {
-    return {
-      // myData: { oops: "gets removed" },
-    };
-  },
-  props: {},
   methods: {
-    ...mapMutations('auth',['logout']),
+    ...mapMutations("auth", ["logout"]),
     navigateHandler(navigate, href) {
       // navigate();
       this.$router.push({ path: href });
     },
     logoutHandler() {
       this.logout();
-      this.$router.push({path: "/login"});
+      this.$router.push({ path: "/login" });
     },
   },
 };

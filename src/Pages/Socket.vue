@@ -26,9 +26,9 @@
         <div
           v-for="user in messages"
           :key="user.id"
-          :class="{'user-message': user.isUser}"
+          :class="{'user-message': user.isUser, 'message': !user.isUser}"
         >
-          {{user.name}}: {{user.message}}
+          <span>{{user.name}}</span>: {{user.message}}
         </div>
       </div>
       <form

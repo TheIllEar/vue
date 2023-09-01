@@ -12,6 +12,7 @@
       :type="type"
       title="Ойой"
       text="Скрой меня =)"
+      @hide="toggleAlert(); changeColor();"
     />
     <div class="card flex">
       <p

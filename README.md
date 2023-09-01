@@ -1,5 +1,8 @@
 # vue (Some projects by practice)
-![Alt text](image.png)
+- Тестовый проект для разбора фишек на Vue 3
+- Разработка мессенджера с авторизацией, JWT и socket.io
+- [Сервер](https://github.com/TheIllEar/vue-server) для обработки авторизации и сокетов 
+
 ## Project setup
 ```
 npm install
